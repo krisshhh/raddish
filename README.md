@@ -1,4 +1,4 @@
-#Raddish
+#Radish
 
 Rabbitmq desktop client
 
