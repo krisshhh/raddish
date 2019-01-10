@@ -1,0 +1,3 @@
+#Raddish
+
+Rabbitmq desktop client
