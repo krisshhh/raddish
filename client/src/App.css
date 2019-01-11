@@ -1,0 +1,17 @@
+.ui.radish-nav {
+    background: #f5f6fa;
+}
+
+.ui.radish-header .ui.image {
+    width: 1.4em;
+}
+
+.ui.radish-header h2 {
+    margin: 0px;
+}
+
+.ui.radish-header div.content {
+    font-size: medium;
+    color: #2c3e50;
+    padding: 0px !important;
+}
