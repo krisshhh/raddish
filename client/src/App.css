@@ -1,17 +1,15 @@
-.ui.radish-nav {
-    background: #f5f6fa;
+body {
+    background: #2c3e50;
 }
 
-.ui.radish-header .ui.image {
-    width: 1.4em;
+#radish-header {
+    margin: 20px;
 }
 
-.ui.radish-header h2 {
-    margin: 0px;
+#radish-header img.logo {
+    margin: 15px;
 }
 
-.ui.radish-header div.content {
-    font-size: medium;
-    color: #2c3e50;
-    padding: 0px !important;
+#radish-header div.content {
+    color: wheat;
 }

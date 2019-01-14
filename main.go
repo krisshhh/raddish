@@ -40,7 +40,7 @@ func main() {
 	if runtime.GOOS == "linux" {
 		args = append(args, "--class=Lorca")
 	}
-	ui, err := lorca.New("", "", 480, 320, args...)
+	ui, err := lorca.New("", "", 900, 650, args...)
 	if err != nil {
 		log.Fatal(err)
 	}
