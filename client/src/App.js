@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { Container, Header,Form, Icon, Grid, Search, Button, Image, Segment, Menu } from 'semantic-ui-react'
+import { connect } from "react-redux";
 import './App.css';
 
+const mapStateToProps = state => {
+  return { ...state.radish };
+};
+
 class App extends Component {
+
+  constructor(props, context) {
+    super(props, context);
+  }
+
   render() {
     return (
     <Grid>
@@ -19,15 +29,18 @@ class App extends Component {
           <Segment inverted>
             <Form inverted size='small'>
               <Form.Group widths='equal'>
-                <Form.Input fluid label='Host' placeholder='127.0.0.1' />
+                <Form.Input fluid label='Host'
+                value={this.props.loggedIn.toString() } 
+                placeholder='127.0.0.1' />
                 <Form.Input fluid label='Port' placeholder='5678' />
               </Form.Group>
               <Form.Input fluid label='Username' placeholder='Username' />
               <Form.Input fluid label='Password' placeholder='Password' />
-              <Button type='submit' positive>Tap</Button>
-              <Button type='submit' primary>Test</Button>
+              <Button type='button' positive>Tap</Button>
+              <Button type='button' primary>Test</Button>
             </Form>
           </Segment>
+          <pre>{ JSON.stringify(this.props) }</pre>
         </Grid.Column>
       </Grid.Row>
     </Grid>
@@ -35,4 +48,6 @@ class App extends Component {
   }
 }
 
-export default App;
+const app = connect(mapStateToProps)(App);
+
+export default app;
