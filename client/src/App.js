@@ -1,16 +1,42 @@
 import React, { Component } from 'react';
 import { Container, Header,Form, Icon, Grid, Search, Button, Image, Segment, Menu } from 'semantic-ui-react'
 import { connect } from "react-redux";
+import { login } from './actions/index'; 
 import './App.css';
 
 const mapStateToProps = state => {
   return { ...state.radish };
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    login: details => dispatch(login(details))
+  };
+}
+
 class App extends Component {
 
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      host: '',
+      port: '',
+      userName: '',
+      password: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ [event.target.id]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const loginDetails = this.state;
+    this.props.login(loginDetails);
+    this.setState({ title: "" });
   }
 
   render() {
@@ -30,14 +56,28 @@ class App extends Component {
             <Form inverted size='small'>
               <Form.Group widths='equal'>
                 <Form.Input fluid label='Host'
-                value={this.props.loggedIn.toString() } 
-                placeholder='127.0.0.1' />
-                <Form.Input fluid label='Port' placeholder='5678' />
+                  id="host"
+                  value={this.state.host } 
+                  onChange={this.handleChange }
+                  placeholder='127.0.0.1' />
+                <Form.Input fluid label='Port' 
+                  id="port"
+                  value={this.state.port } 
+                  onChange={this.handleChange }
+                  placeholder='5678' />
               </Form.Group>
-              <Form.Input fluid label='Username' placeholder='Username' />
-              <Form.Input fluid label='Password' placeholder='Password' />
+              <Form.Input fluid label='Username' 
+                  id="userName"
+                  value={this.state.userName } 
+                  onChange={this.handleChange }
+                  placeholder='Username' />
+              <Form.Input fluid label='Password'
+                  id="password"
+                  value={this.state.password } 
+                  onChange={this.handleChange }
+                  placeholder='Password' />
               <Button type='button' positive>Tap</Button>
-              <Button type='button' primary>Test</Button>
+              <Button type='submit' onClick={ this.handleSubmit } primary>Test</Button>
             </Form>
           </Segment>
           <pre>{ JSON.stringify(this.props) }</pre>
@@ -48,6 +88,6 @@ class App extends Component {
   }
 }
 
-const app = connect(mapStateToProps)(App);
+const app = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default app;
