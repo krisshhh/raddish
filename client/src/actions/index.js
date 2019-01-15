@@ -1,36 +1,44 @@
 import api from './../services/api';
+import { ofType } from 'redux-observable';
+import { of } from 'rxjs';
+import { catchError, mergeMap, map } from 'rxjs/operators';
 
-export const RABBITMQ_LOGIN_REQUEST = 'RABBITMQ_LOGIN_REQUEST';
-export function rabbitmqLoginRequest(loginDetails) {
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export function login(loginDetails) {
     return {
-        type: RABBITMQ_LOGIN_REQUEST,
+        type: LOGIN_REQUEST,
         loginDetails
     }
 }
 
-export const RABBITMQ_LOGIN_SUCCESS = 'RABBITMQ_LOGIN_SUCCESS';
-export function rabbitmqLoginSuccess(loginDetails, data) {
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export function loginSuccess(loginDetails, data) {
     return {
-        type: RABBITMQ_LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS,
         loginDetails,
         rabbitmq: data,
         receivedAt: Date.now()
     }
 }
 
-export const RABBITMQ_LOGIN_FAILURE = 'RABBITMQ_LOGIN_FAILURE'
-export function rabbitmqLoginFailure(loginDetails) {
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export function loginFailure(loginDetails) {
     return {
-        type: RABBITMQ_LOGIN_FAILURE,
+        type: LOGIN_FAILURE,
         loginDetails
     }
 }
 
-export function login(details) {
-    return function(dispatch) {
-        dispatch(rabbitmqLoginRequest(details));
-        return api.login(details)
-            .then(res => dispatch(rabbitmqLoginSuccess(details, res)))
-            .catch(err => dispatch(rabbitmqLoginFailure(details)))
-    }
-}
+// epic
+export const loginEpic = action$ => action$.pipe(
+    ofType(LOGIN_REQUEST),
+    mergeMap(action => {
+        return api.login(action.loginDetails).pipe(
+            map(res => loginSuccess(action.loginDetails, res)),
+            catchError(err => of({
+                type: LOGIN_FAILURE,
+                loginDetails: action.loginDetails
+            }))
+        );
+    })
+);

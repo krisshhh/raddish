@@ -1,18 +1,16 @@
+import { of } from 'rxjs';
+
 class Api {
 
-    constructor() {}
+    constructor() {
+    }
 
     login(details) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('hittttttttttttt');
-                resolve({
-                    exchanges: [],
-                    queues: [],
-                    binds: []
-                })
-            }, 1000);
-        })
+        return of({
+            exchanges: [],
+            queues: [],
+            binds: []
+        });
     }
 }
 

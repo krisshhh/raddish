@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { 
-    RABBITMQ_LOGIN_FAILURE, 
-    RABBITMQ_LOGIN_SUCCESS,
-    RABBITMQ_LOGIN_REQUEST
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE, 
+    LOGIN_REQUEST
 } from './../actions';
 
 const initialState = {
@@ -14,14 +14,14 @@ const initialState = {
 
 function radish(state = initialState, action) {
     switch(action.type) {
-        case RABBITMQ_LOGIN_FAILURE:
+        case LOGIN_FAILURE:
             return { 
                 ...state,
                 loggedIn: false,
                 loginDetails: action.loginDetails,
                 isLoggingIn: false 
             };
-        case RABBITMQ_LOGIN_SUCCESS:
+        case LOGIN_SUCCESS:
             return { 
                 ...state,
                 loggedIn: true, 
@@ -29,7 +29,7 @@ function radish(state = initialState, action) {
                 isLoggingIn: false,
                 rabbitmq: action.rabbitmq 
             };
-        case RABBITMQ_LOGIN_REQUEST:
+        case LOGIN_REQUEST:
             return { 
                 ...state,
                 isLoggingIn: true, 
