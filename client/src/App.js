@@ -82,7 +82,7 @@ class App extends Component {
               <Button type='submit' onClick={ this.handleSubmit } primary>Test</Button>
             </Form>
           </Segment>
-          <pre>{ JSON.stringify(this.props) }</pre>
+          {/* <pre>{ JSON.stringify(this.props) }</pre> */}
         </Grid.Column>
       </Grid.Row>
     </Grid>

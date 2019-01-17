@@ -5,21 +5,20 @@ class Api {
 
     constructor() {
         this.broker = new Subject();
-        window.response = this.response;
+        window.response = this.response.bind(this);
     }
 
     response(type, response) {
         const res = { type, response: JSON.parse(response) };
-        this.broker.next(res);  
+        this.broker.next(res);
     }
 
     login(details) {
         window.Login(JSON.stringify(details));
-        const resp$ = this.broker.asObservable();
-        return resp$.pipe(
-            tap(x => console.log),
+        return this.broker.asObservable().pipe(
+            filter(e => e.type === 'LOGIN_RESPONSE'),
+            map(e => e.response),
             take(1),
-            map(x => x.response)
         );
     }
 }

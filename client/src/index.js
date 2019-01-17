@@ -11,3 +11,10 @@ ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElemen
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+//MOCK -- comment out
+// window.Login = function() {
+//     setTimeout(() => {
+//         window.response('LOGIN_RESPONSE', '{}');
+//     }, 4000);
+// }
