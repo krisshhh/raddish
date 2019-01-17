@@ -1,22 +1,26 @@
 import { of, throwError, Subject } from 'rxjs';
-import { catchError, mergeMap, map, take } from 'rxjs/operators';
+import { catchError, mergeMap, map, take, filter, tap } from 'rxjs/operators';
 
 class Api {
 
     constructor() {
         this.broker = new Subject();
-        window.onLogin = this.onLoginResponse;
+        window.response = this.response;
     }
 
-    onLoginResponse(response) {
-        const res =  JSON.parse(response);
+    response(type, response) {
+        const res = { type, response: JSON.parse(response) };
         this.broker.next(res);  
     }
 
     login(details) {
-        window.Login(details);
+        window.Login(JSON.stringify(details));
         const resp$ = this.broker.asObservable();
-        return resp$.pipe(take(1));
+        return resp$.pipe(
+            tap(x => console.log),
+            take(1),
+            map(x => x.response)
+        );
     }
 }
 

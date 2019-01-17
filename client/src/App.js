@@ -14,16 +14,18 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+const initialState = {
+  host: '',
+  port: '',
+  userName: '',
+  password: ''
+}
+
 class App extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      host: '',
-      port: '',
-      userName: '',
-      password: ''
-    }
+    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -36,7 +38,7 @@ class App extends Component {
     event.preventDefault();
     const loginDetails = this.state;
     this.props.login(loginDetails);
-    this.setState({ title: "" });
+    this.setState(initialState);
   }
 
   render() {
