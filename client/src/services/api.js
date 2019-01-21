@@ -8,8 +8,11 @@ class Api {
         window.response = this.response.bind(this);
     }
 
-    response(type, response) {
-        const res = { type, response: JSON.parse(response) };
+    response(type, status, response, err) {
+        const res = { 
+            type, status, err,
+            response: JSON.parse(response),
+        };
         this.broker.next(res);
     }
 
@@ -17,7 +20,13 @@ class Api {
         window.Login(JSON.stringify(details));
         return this.broker.asObservable().pipe(
             filter(e => e.type === 'LOGIN_RESPONSE'),
-            map(e => e.response),
+            map(e => {
+                if (e.status === 'SUCCESS') {
+                    return e.response;
+                } else {
+                    throw new Error(e.error);
+                }
+            }),
             take(1),
         );
     }

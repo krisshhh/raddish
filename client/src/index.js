@@ -15,6 +15,6 @@ serviceWorker.unregister();
 //MOCK -- comment out
 // window.Login = function() {
 //     setTimeout(() => {
-//         window.response('LOGIN_RESPONSE', '{}');
+//         window.response('LOGIN_RESPONSE', 'FAILURE',  '{}', 'FAILED to login');
 //     }, 4000);
 // }

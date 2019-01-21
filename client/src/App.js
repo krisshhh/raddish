@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header,Form, Icon, Grid, Search, Button, Image, Segment, Menu } from 'semantic-ui-react'
+import { Container, Header,Form, Icon, Grid, Portal, Button, Image, Segment, Menu } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { login } from './actions/index'; 
 import './App.css';
@@ -18,7 +18,8 @@ const initialState = {
   host: '',
   port: '',
   userName: '',
-  password: ''
+  password: '',
+  openToast: true
 }
 
 class App extends Component {
@@ -79,10 +80,15 @@ class App extends Component {
                   onChange={this.handleChange }
                   placeholder='Password' />
               <Button type='button' positive>Tap</Button>
-              <Button type='submit' onClick={ this.handleSubmit } primary>Test</Button>
+              <Button type='submit' onClick={ this.handleSubmit } loading={ this.props.isLoggingIn } primary>Test</Button>
             </Form>
           </Segment>
           {/* <pre>{ JSON.stringify(this.props) }</pre> */}
+          <Portal open={ this.state.openToast }>
+            <Segment  inverted color='red' style={{ right: '30px', position: 'fixed', bottom: '30px', zIndex: 1000 }}>
+               Failed to login
+            </Segment>
+          </Portal>
         </Grid.Column>
       </Grid.Row>
     </Grid>

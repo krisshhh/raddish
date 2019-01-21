@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+
 	"github.com/zserge/lorca"
 )
 
@@ -17,20 +18,20 @@ import (
 // is executed in its own goroutine. In this simple case we may use atomic
 // operations, but for more complex cases one should use proper synchronization.
 
+var rabbitMqConnection AmqpConnection
+var ui lorca.UI
+var uiErr error
+
 func main() {
 	args := []string{}
 	if runtime.GOOS == "linux" {
 		args = append(args, "--class=Lorca")
 	}
-	ui, err := lorca.New("", "", 900, 650, args...)
-	if err != nil {
-		log.Fatal(err)
+	ui, uiErr = lorca.New("", "", 900, 650, args...)
+	if uiErr != nil {
+		log.Fatal(uiErr)
 	}
 	defer ui.Close()
-
-	uilog := func (str string) {
-		ui.Eval(fmt.Sprintf("console.log('%s')", str));
-	}
 
 	// A simple way to know when UI is ready (uses body.onload event in JS)
 	ui.Bind("start", func() {
@@ -38,15 +39,20 @@ func main() {
 	})
 
 	ui.Bind("Login", func(str string) {
-		fmt.Println(str);
-		uilog(str);
-		det := ParseLoginDetails(str);
+		UIlog(str)
+		det := ParseLoginDetails(str)
 		fmt.Println(det)
 
 		// connect to rabbitmq
-
-		emp := &Rabbitmq{Exchanges: []string{"amp.fanout"}}
-		ui.Eval(Respond("LOGIN_RESPONSE", StringifyRabbitmqDetails(emp)))
+		amqpURL := fmt.Sprintf("amqp://%s:%s@%s:%s", det.Username, det.Password, det.Host, det.Port)
+		UIlog(amqpURL)
+		rabbitMqConnection = RabbitMqConnect(amqpURL)
+		if rabbitMqConnection.connected == false {
+			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
+			return
+		}
+		amqpDetails := StringifyRabbitmqDetails(&Rabbitmq{Exchanges: []string{"amp.fanout"}})
+		UIRespond("LOGIN_RESPONSE", "SUCCESS", amqpDetails, "")
 	})
 
 	// Load HTML.
