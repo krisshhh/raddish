@@ -13,10 +13,6 @@ type RabbitmqLoginDetails struct {
 	Password string `json:"password"`
 }
 
-//Rabbitmq : server details
-type Rabbitmq struct {
-	Exchanges []string `json:"exchanges"`
-}
 
 //ParseLoginDetails : parse login details
 func ParseLoginDetails(str string) RabbitmqLoginDetails {
@@ -28,8 +24,8 @@ func ParseLoginDetails(str string) RabbitmqLoginDetails {
 }
 
 //StringifyRabbitmqDetails : stringify server details
-func StringifyRabbitmqDetails(emp *Rabbitmq) string {
-	e, err := json.Marshal(emp)
+func StringifyRabbitmqDetails(info *BrokerInfo) string {
+	e, err := json.Marshal(info)
 	if err != nil {
 		fmt.Println(err)
 	}

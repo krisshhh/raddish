@@ -47,18 +47,17 @@ func main() {
 
 		// connect to rabbitmq
 		amqpURL := fmt.Sprintf("amqp://%s:%s@%s:%s", det.Username, det.Password, det.Host, det.Port)
-		restUrl := fmt.Sprintf("http://%s:%s@%s:%s/api", det.Username, det.Password, det.Host, "15672")
+		restURL := fmt.Sprintf("http://%s:%s@%s:%s/api", det.Username, det.Password, det.Host, "15672")
 		UIlog(amqpURL)
 		rabbitMqConnection = RabbitMqConnect(amqpURL)
 		if rabbitMqConnection.connected == false {
-			restClient := NewRabbitHTTPClient(restUrl, &tls.Config{})
-			info, err := restClient.BrokerInfo()
-			fmt.Println(err)
-			fmt.Println(info)
 			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
 			return
 		}
-		amqpDetails := StringifyRabbitmqDetails(&Rabbitmq{Exchanges: []string{"amp.fanout"}})
+		restClient := NewRabbitHTTPClient(restUrl, &tls.Config{})
+		info, err := restClient.BrokerInfo()
+		fmt.Println(err)
+		amqpDetails := StringifyRabbitmqDetails(&info)
 		UIRespond("LOGIN_RESPONSE", "SUCCESS", amqpDetails, "")
 	})
 
