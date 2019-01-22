@@ -3,6 +3,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net"
@@ -18,9 +19,10 @@ import (
 // is executed in its own goroutine. In this simple case we may use atomic
 // operations, but for more complex cases one should use proper synchronization.
 
-var rabbitMqConnection AmqpConnection
-var ui lorca.UI
 var uiErr error
+var ui lorca.UI
+var restClient RabbitHTTPClient
+var rabbitMqConnection AmqpConnection
 
 func main() {
 	args := []string{}
@@ -45,9 +47,14 @@ func main() {
 
 		// connect to rabbitmq
 		amqpURL := fmt.Sprintf("amqp://%s:%s@%s:%s", det.Username, det.Password, det.Host, det.Port)
+		restUrl := fmt.Sprintf("http://%s:%s@%s:%s/api", det.Username, det.Password, det.Host, "15672")
 		UIlog(amqpURL)
 		rabbitMqConnection = RabbitMqConnect(amqpURL)
 		if rabbitMqConnection.connected == false {
+			restClient := NewRabbitHTTPClient(restUrl, &tls.Config{})
+			info, err := restClient.BrokerInfo()
+			fmt.Println(err)
+			fmt.Println(info)
 			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
 			return
 		}

@@ -11,6 +11,7 @@ node_modules
 # production
 build
 /assets.go
+test.go
 
 # misc
 .DS_Store
