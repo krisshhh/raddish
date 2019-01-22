@@ -54,7 +54,7 @@ func main() {
 			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
 			return
 		}
-		restClient := NewRabbitHTTPClient(restUrl, &tls.Config{})
+		restClient := NewRabbitHTTPClient(restURL, &tls.Config{})
 		info, err := restClient.BrokerInfo()
 		fmt.Println(err)
 		amqpDetails := StringifyRabbitmqDetails(&info)
