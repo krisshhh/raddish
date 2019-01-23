@@ -13,6 +13,7 @@ import (
 	"runtime"
 
 	"github.com/zserge/lorca"
+	"github.com/jandelgado/rabtap/pkg"
 )
 
 // Go types that are bound to the UI must be thread-safe, because each binding
@@ -21,7 +22,7 @@ import (
 
 var uiErr error
 var ui lorca.UI
-var restClient RabbitHTTPClient
+var restClient rabtap.RabbitHTTPClient
 var rabbitMqConnection AmqpConnection
 
 func main() {
@@ -54,7 +55,7 @@ func main() {
 			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
 			return
 		}
-		restClient := NewRabbitHTTPClient(restURL, &tls.Config{})
+		restClient := rabtap.NewRabbitHTTPClient(restURL, &tls.Config{})
 		info, err := restClient.BrokerInfo()
 		fmt.Println(err)
 		amqpDetails := StringifyRabbitmqDetails(&info)

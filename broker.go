@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"encoding/json"
+	"github.com/jandelgado/rabtap/pkg"
 )
 
 //RabbitmqLoginDetails : server login details
@@ -24,7 +25,7 @@ func ParseLoginDetails(str string) RabbitmqLoginDetails {
 }
 
 //StringifyRabbitmqDetails : stringify server details
-func StringifyRabbitmqDetails(info *BrokerInfo) string {
+func StringifyRabbitmqDetails(info *rabtap.BrokerInfo) string {
 	e, err := json.Marshal(info)
 	if err != nil {
 		fmt.Println(err)
