@@ -18,8 +18,7 @@ const initialState = {
   host: '',
   port: '',
   userName: '',
-  password: '',
-  openToast: true
+  password: ''
 }
 
 class App extends Component {
@@ -84,11 +83,11 @@ class App extends Component {
             </Form>
           </Segment>
           {/* <pre>{ JSON.stringify(this.props) }</pre> */}
-          <Portal open={ this.state.openToast }>
+          {/* <Portal open={ this.state.openToast }>
             <Segment  inverted color='red' style={{ right: '30px', position: 'fixed', bottom: '30px', zIndex: 1000 }}>
                Failed to login
             </Segment>
-          </Portal>
+          </Portal> */}
         </Grid.Column>
       </Grid.Row>
     </Grid>

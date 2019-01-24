@@ -33,14 +33,13 @@ func StringifyRabbitmqDetails(info *rabtap.BrokerInfo) string {
 	return string(e);
 }
 
-//UIRespond : send data to frontend
-func UIRespond(resType string, status string, response string, err string) {
-	str := fmt.Sprintf("response('%s', '%s', '%s', '%s')", resType, status, response, err);
-	UIlog(str);
+// UIRespond : send data to frontend
+func UIRespond(resID string, resType string, status string, response string, err string) {
+	str := fmt.Sprintf("response('%s', '%s', '%s', '%s', '%s')", resID, resType, status, response, err);
 	ui.Eval(str);
 }
 
-//UIlog : log in browser
-func UIlog(log string) {
+// UILog : log in browser
+func UILog(log string) {
 	ui.Eval(fmt.Sprintf("console.log('Go: %s')", log))
 }

@@ -20,7 +20,6 @@ import (
 
 var uiErr error
 var ui lorca.UI
-var rabbitmq *Rabbitmq
 
 func main() {
 	args := []string{}
@@ -36,21 +35,11 @@ func main() {
 	// A simple way to know when UI is ready (uses body.onload event in JS)
 	ui.Bind("start", func() {
 		log.Println("UI is ready")
+		RequestHandler("0", "START", "")
 	})
 
-	ui.Bind("Login", func(str string) {
-		UIlog(str)
-		details := ParseLoginDetails(str)
-
-		// connect to rabbitmq
-		rabbitmq = NewRabbitmq()
-		err := rabbitmq.Connect(details)
-		if err != nil {
-			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", fmt.Sprintf("%s", err))
-		}
-		amqpDetails := StringifyRabbitmqDetails(&rabbitmq.brokerInfo)
-		UIRespond("LOGIN_RESPONSE", "SUCCESS", amqpDetails, "")
-	})
+	// Bind Request to Go Request handler
+	ui.Bind("Request", RequestHandler)
 
 	// Load HTML.
 	// You may also use `data:text/html,<base64>` approach to load initial HTML,
