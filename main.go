@@ -3,7 +3,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"fmt"
 	"log"
 	"net"
@@ -13,7 +12,6 @@ import (
 	"runtime"
 
 	"github.com/zserge/lorca"
-	"github.com/jandelgado/rabtap/pkg"
 )
 
 // Go types that are bound to the UI must be thread-safe, because each binding
@@ -22,8 +20,7 @@ import (
 
 var uiErr error
 var ui lorca.UI
-var restClient rabtap.RabbitHTTPClient
-var rabbitMqConnection AmqpConnection
+var rabbitmq *Rabbitmq
 
 func main() {
 	args := []string{}
@@ -43,22 +40,15 @@ func main() {
 
 	ui.Bind("Login", func(str string) {
 		UIlog(str)
-		det := ParseLoginDetails(str)
-		fmt.Println(det)
+		details := ParseLoginDetails(str)
 
 		// connect to rabbitmq
-		amqpURL := fmt.Sprintf("amqp://%s:%s@%s:%s", det.Username, det.Password, det.Host, det.Port)
-		restURL := fmt.Sprintf("http://%s:%s@%s:%s/api", det.Username, det.Password, det.Host, "15672")
-		UIlog(amqpURL)
-		rabbitMqConnection = RabbitMqConnect(amqpURL)
-		if rabbitMqConnection.connected == false {
-			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", "LOGIN FAILED")
-			return
+		rabbitmq = NewRabbitmq()
+		err := rabbitmq.Connect(details)
+		if err != nil {
+			UIRespond("LOGIN_RESPONSE", "FAILURE", "{}", fmt.Sprintf("%s", err))
 		}
-		restClient := rabtap.NewRabbitHTTPClient(restURL, &tls.Config{})
-		info, err := restClient.BrokerInfo()
-		fmt.Println(err)
-		amqpDetails := StringifyRabbitmqDetails(&info)
+		amqpDetails := StringifyRabbitmqDetails(&rabbitmq.brokerInfo)
 		UIRespond("LOGIN_RESPONSE", "SUCCESS", amqpDetails, "")
 	})
 
