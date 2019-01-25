@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import loginComponent from './pages/login';
+import dashboardComponent from './pages/dashboard'
 import './App.css';
 
 class App extends Component {
@@ -13,7 +14,10 @@ class App extends Component {
   render() {
     return (
       <Router>
+        <>
         <Route path="/" exact component={loginComponent} />
+        <Route path="/dashboard" exact component={dashboardComponent} />
+        </>
       </Router>
     );
   }

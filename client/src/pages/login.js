@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header,Form, Icon, Grid, Portal, Button, Image, Segment, Menu } from 'semantic-ui-react'
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom';
 import { login } from './../actions/index';
 
 const mapStateToProps = state => {
@@ -38,6 +37,9 @@ class LoginComponent extends Component {
   }
 
   render() {
+    if (this.props.loggedIn === true) {
+      return <Redirect to='/dashboard' />
+    }
     return (
     <Grid>
       <Grid.Row columns={1}>
