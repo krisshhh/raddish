@@ -32,12 +32,6 @@ func main() {
 	}
 	defer ui.Close()
 
-	// A simple way to know when UI is ready (uses body.onload event in JS)
-	ui.Bind("start", func() {
-		log.Println("UI is ready")
-		RequestHandler("0", "START", "")
-	})
-
 	// Bind Request to Go Request handler
 	ui.Bind("Request", RequestHandler)
 
