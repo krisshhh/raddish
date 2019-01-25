@@ -7,7 +7,7 @@ class Api {
     constructor() {
         this.broker = new Subject();
         window.response = this.response.bind(this);
-        this.request('START', {});
+        // this.request('START', {});
     }
 
     request(type, content) {

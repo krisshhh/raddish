@@ -7,7 +7,12 @@ import {
 
 const initialState = {
     loggedIn: false,
-    loginDetails: {},
+    loginDetails: {
+        host: '127.0.0.1',
+        port: '5672',
+        userName: 'guest',
+        password: 'guest'
+    },
     rabbitmq: {},
     isLoggingIn: false
 }
