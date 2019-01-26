@@ -1,5 +1,17 @@
-body {
+body, #root, .ui.page {
+    height: 100%;
     background: #2c3e50;
+}
+
+.ui.page.dashboard {
+    padding: 0px;
+}
+.ui.page.dashboard .menu.inverted  {
+    margin-bottom: 5px;
+    border-radius: 0px;
+}
+.ui.page.dashboard .item {
+    padding: 0.508571em 1.14285714em;
 }
 
 #radish-header {
