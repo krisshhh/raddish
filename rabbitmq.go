@@ -61,3 +61,15 @@ func (rabbitmq *Rabbitmq) UpdateBrokerInfo() error {
 	return nil;
 }
  
+// SubscribeToQueue sub to queue
+func (rabbitmq *Rabbitmq) SubscribeToQueue(queueName string) (<-chan amqp.Delivery, error) {
+	channel, err := rabbitmq.connection.Channel()
+	if err != nil {
+		return nil, err
+	}
+	msgs, err := channel.Consume(queueName, "RADISH", false, false, false, false, nil)
+	if err != nil {
+		return nil, err
+	}
+	return msgs, nil
+}
