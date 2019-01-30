@@ -16,15 +16,15 @@ class TabComponent extends Component {
         }
     }
 
-    getInitialTab(index) {
+    getInitialTab(tabId) {
         return {
-            index,
+            tabId,
             menuItem: (
-                <Menu.Item key={index}>
-                  NewTab <Icon name='close' onClick={ ($e) => { this.closeTab(index); $e.stopPropagation();  } } />
+                <Menu.Item key={tabId}>
+                  NewTab <Icon name='close' onClick={ ($e) => { this.closeTab(tabId); $e.stopPropagation();  } } />
                 </Menu.Item>
             ),
-            render: () => <Tab.Pane attached={false}>Tab { index } Content</Tab.Pane>
+            render: () => <Tab.Pane attached={false}>Tab { tabId } Content</Tab.Pane>
         }
     }
 
@@ -39,43 +39,35 @@ class TabComponent extends Component {
     }
 
     addTab() {
-        const index = this.state.panes.length;
+        const panes = this.state.panes;
+        const index = panes.length;
         const newTab = this.getInitialTab(uuid.v4());
-        this.setState(state => {
-            state.panes.splice(index-1, 0, newTab)
-            return state;
-        })
+        panes.splice(index-1, 0, newTab);
+        this.setState({ panes })
     }
 
-    closeTab(index) {
-        if(this.state.panes.length === 2) {
-            return
-        }
-        let activeIndex = this.state.activeIndex;
-        const activeTabIndex = this.state.panes[activeIndex].index;
-        const panes = remove([ ...this.state.panes ], n => {
-            return n.index !== index;
-        })
-        if (activeIndex === findIndex(this.state.panes, { 'index': index }) ){
-            activeIndex = panes.length - 2;
-        } else {
-            activeIndex = findIndex(panes, { 'index': activeTabIndex })
-        }
-        this.setState({ activeIndex, panes })
+    closeTab(deleteTabId) {
+        if(this.state.panes.length === 2) { return }
+        const activeIndex = this.state.activeIndex;
+        const activeTabId = this.state.panes[activeIndex].tabId;
+        const deleteTabIndex = findIndex(this.state.panes, { 'tabId': deleteTabId })
+        const panes = remove([ ...this.state.panes ], n => n.tabId !== deleteTabId)
+        //TODO change 0 to nearest tab id
+        const newActiveIndex = (activeIndex ===  deleteTabIndex)?
+            0 : findIndex(panes, { 'tabId': activeTabId });
+        this.setState({ activeIndex: newActiveIndex, panes })
     }
 
-    handleTabChange(e, { activeIndex }) {
-        this.setState({ activeIndex })
-    }
+    handleTabChange(e, { activeIndex }) { this.setState({ activeIndex }) }
 
     render() {
         const { activeIndex, panes } = this.state
         return (
             <Tab 
-                menu={{ secondary: true, pointing: true }} 
-                activeIndex={activeIndex}
-                onTabChange={this.handleTabChange}
-                panes={panes} />
+            menu={{ secondary: true, pointing: true }} 
+            activeIndex={activeIndex}
+            onTabChange={this.handleTabChange}
+            panes={panes} />
         )
     }
 }
