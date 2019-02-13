@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Menu, Icon, Header, Grid, Segment, Dimmer, Loader, Button } from 'semantic-ui-react'
-import HeaderComponent from './../components/Header';
-import TabComponent from './../components/Tab'; 
+import HeaderComponent from './../../components/Header';
+import TabComponent from './tab'; 
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Redirect } from 'react-router-dom'
 
-const mapStateToProps = state => {
-  return { ...state.radish };
+const mapStateToProps = ({ dashboard }) => {
+  return dashboard;
 };
 
 function mapDispatchToProps(dispatch) {
@@ -19,8 +19,7 @@ class DashboardComponent extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = { 
-        ...props,
-        activeItem: 'bio'
+        ...props
     };
   }
 
@@ -30,19 +29,14 @@ class DashboardComponent extends Component {
     // if (this.props.loggedIn === false) {
     //     return <Redirect to='/' />
     // }
-    const { activeItem } = this.state
     return (
         <Segment className="page dashboard">
-            <Grid className="dashboard-container">
-                <Grid.Row columns={1}>
-                    <Grid.Column>
-                        <HeaderComponent></HeaderComponent>
-                    </Grid.Column>
-                    <Grid.Row columns={1} centered>
-                        <TabComponent></TabComponent>
-                    </Grid.Row>
-                </Grid.Row>
-            </Grid>
+            <div className="dashboard-header">
+                <HeaderComponent></HeaderComponent>
+            </div>
+            <div className="dashboard-container">
+                <TabComponent></TabComponent>
+            </div>
         </Segment>
     );
   }

@@ -2,16 +2,44 @@ body, #root, .ui.page {
     height: 100%;
     background: #2c3e50;
 }
+.ui.header {
+    color: wheat;
+}
 
 .ui.page.dashboard {
     padding: 0px;
+    display: flex;
+    flex-direction: column;
 }
 .ui.page.dashboard .menu.inverted  {
-    margin-bottom: 5px;
     border-radius: 0px;
+}
+.dashboard-header {
+    margin-bottom: 10px;
 }
 .ui.page.dashboard .item {
     padding: 0.508571em 1.14285714em;
+}
+
+.dashboard-container {
+    height: calc(100% - 82px);
+    margin: 10px;
+}
+
+.ui.segment.active.tab.tab-container {
+    margin-top: 0px;
+    border: none;
+    border-radius: 0px;
+}
+
+.tab-container {
+    height: 100%;
+}
+
+.tab-component {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 #radish-header {

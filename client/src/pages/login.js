@@ -3,10 +3,10 @@ import { Container, Header,Form, Icon, Grid,
   Portal, Button, Image, Segment, Menu, Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from "react-redux";
 import { withRouter, Redirect } from 'react-router-dom';
-import { login } from './../actions/index';
+import { login } from './../actions/login.actions';
 
-const mapStateToProps = state => {
-  return { ...state.radish };
+const mapStateToProps = ({ login }) => {
+  return login;
 };
 
 function mapDispatchToProps(dispatch) {
@@ -26,24 +26,24 @@ class LoginComponent extends Component {
 
   handleChange(route, event) {
     this.setState(state => {
-        state.loginDetails[event.target.id] = event.target.value;
+        state.details[event.target.id] = event.target.value;
         return state;
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { loginDetails } = this.state;
-    this.props.login(loginDetails);
+    const { details } = this.state;
+    this.props.login(details);
   }
 
   render() {
-    if (this.props.loggedIn === true) {
+    if (this.props.status === true) {
       return <Redirect to='/dashboard' />
     }
     return (
       <Segment className="page">
-        <Dimmer {...(this.props.isLoggingIn ? {active:true} : {})}>
+        <Dimmer {...(this.props.processing ? {active:true} : {})}>
           <Loader />
         </Dimmer>
         <Grid>
@@ -62,27 +62,27 @@ class LoginComponent extends Component {
                   <Form.Group widths='equal'>
                     <Form.Input fluid label='Host'
                       id="host"
-                      value={this.state.loginDetails.host } 
+                      value={this.state.details.host } 
                       onChange={this.handleChange }
                       placeholder='127.0.0.1' />
                     <Form.Input fluid label='Port' 
                       id="port"
-                      value={this.state.loginDetails.port } 
+                      value={this.state.details.port } 
                       onChange={this.handleChange }
                       placeholder='5678' />
                   </Form.Group>
                   <Form.Input fluid label='Username' 
                       id="userName"
-                      value={this.state.loginDetails.userName } 
+                      value={this.state.details.userName } 
                       onChange={this.handleChange }
                       placeholder='Username' />
                   <Form.Input fluid label='Password'
                       id="password"
-                      value={this.state.loginDetails.password } 
+                      value={this.state.details.password } 
                       onChange={this.handleChange }
                       placeholder='Password' />
                   <Button type='submit' onClick={ this.handleSubmit } positive>Tap</Button>
-                  <Button type='submit' onClick={ this.handleSubmit } loading={ this.props.isLoggingIn } primary>Test</Button>
+                  <Button type='submit' onClick={ this.handleSubmit } loading={ this.props.processing } primary>Test</Button>
                 </Form>
               </Segment>
               {/* <pre>{ JSON.stringify(this.props) }</pre> */}
