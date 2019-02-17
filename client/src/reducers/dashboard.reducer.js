@@ -1,6 +1,6 @@
 import { initialState } from './initialState';
 import { LOGIN_SUCCESS } from './../actions/login.actions';
-import { NEW_TAB, SET_ACTIVE_TAB, CLOSE_TAB } from './../actions/dashboard.actions';
+import { NEW_TAB, SET_ACTIVE_TAB, CLOSE_TAB, SET_MENU } from './../actions/dashboard.actions';
 import { remove, findIndex } from 'lodash';
 
 export default function dashboardReducer(state = initialState.dashboard, action) {
@@ -21,7 +21,9 @@ export default function dashboardReducer(state = initialState.dashboard, action)
                 activeTab: action.tabIndex
             }
         case CLOSE_TAB: 
-            return closeTabReducer(state, action);           
+            return closeTabReducer(state, action);
+        case SET_MENU:
+            return switchMenuReducer(state, action);
         default:
             return state;
     }
@@ -46,4 +48,14 @@ function closeTabReducer(state, action) {
         tabs: newTabs,
         activeTab: nearestTabId
     }
+}
+
+function switchMenuReducer(state, { menuId }) {
+    const newTabs = state.tabs;
+    const activeTab = state.activeTab;
+    newTabs[activeTab].activeMenu = menuId;
+    return {
+        ...state,
+        tabs: newTabs
+    }; 
 }

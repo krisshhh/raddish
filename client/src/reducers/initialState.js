@@ -19,17 +19,12 @@ export const initialState = {
 }
 
 export function newTabState() {
-    const tap = {
-        active: true,
-    }
-    const subscribe = {
-        active: false
-    }
-    const publish = {
-        active: false
-    }
+    const tap = {}
+    const subscribe = {}
+    const publish = {}
     return {
         id: uuid.v4(),
+        activeMenu: 'tap',
         menu: { tap, subscribe, publish }
     }
 }

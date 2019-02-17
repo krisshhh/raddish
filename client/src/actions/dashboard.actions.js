@@ -30,10 +30,10 @@ export function closeTab(id) {
     }
 }
 
-export const SET_TAB_MENU = 'SET_TAB_MENU'
-export function setTabMenu(id) {
+export const SET_MENU = 'SET_MENU'
+export function setActiveMenu(menuId) {
     return {
-        type: SET_ACTIVE_TAB,
-        tabMenuId: id
+        type: SET_MENU,
+        menuId: menuId
     }
 }

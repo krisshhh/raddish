@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux";
 import { Input, Menu, Segment } from 'semantic-ui-react'
+import { setActiveMenu } from './../../actions/dashboard.actions'
 
 const mapStateToProps = ({ dashboard }) => {
-  return dashboard;
+  const activeTab = dashboard.activeTab;
+  return dashboard.tabs[activeTab];
 };
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//       newTab: () => dispatch(newTab()),
-//       setActiveTab: index => dispatch(setActiveTab(index)),
-//       closeTab: id => dispatch(closeTab(id))
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+      setActiveMenu: menuId => dispatch(setActiveMenu(menuId))
+  };
+}
 
 class TabPaneComponent extends Component {
 
@@ -19,14 +20,17 @@ class TabPaneComponent extends Component {
         super(props, context)
         this.state = { 
             ...props,
-            activeItem: 'tap'
+            activeItem: props.activeMenu
         }
         this.handleItemClick = this.handleItemClick.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState({ activeItem: nextProps.activeMenu })
+    }
+
     handleItemClick = (e, { name }) => {
-      console.log(name);
-      this.setState({ activeItem: name })
+      this.props.setActiveMenu(name);
     }
 
     render() {
@@ -47,4 +51,6 @@ class TabPaneComponent extends Component {
     }
 }
 
-export default TabPaneComponent;
+const tabPaneComponent = connect(mapStateToProps, mapDispatchToProps)(TabPaneComponent)
+
+export default tabPaneComponent;
