@@ -29,3 +29,11 @@ export function closeTab(id) {
         tabId: id
     }
 }
+
+export const SET_TAB_MENU = 'SET_TAB_MENU'
+export function setTabMenu(id) {
+    return {
+        type: SET_ACTIVE_TAB,
+        tabMenuId: id
+    }
+}

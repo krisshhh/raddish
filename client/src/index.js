@@ -6,11 +6,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 //MOCK -- comment out
-// window.Request = function(resId) {
-//     setTimeout(() => {
-//         window.response(resId,'LOGIN_RESPONSE', 'SUCCESS',  '{}', '{}');
-//     }, 3000);
-// }
+window.Request = function(resId) {
+    setTimeout(() => {
+        window.response(resId,'LOGIN_RESPONSE', 'SUCCESS',  JSON.stringify({
+            brokerInfo: [],
+            queues: [],
+        }), '{}');
+    }, 1000);
+}
 
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 

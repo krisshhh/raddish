@@ -1,4 +1,4 @@
-import initialState from './initialState';
+import { initialState } from './initialState';
 import { LOGIN_SUCCESS } from './../actions/login.actions';
 import { NEW_TAB, SET_ACTIVE_TAB, CLOSE_TAB } from './../actions/dashboard.actions';
 import { remove, findIndex } from 'lodash';

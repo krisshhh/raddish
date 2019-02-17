@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { Input, Menu, Segment } from 'semantic-ui-react'
 
+const mapStateToProps = ({ dashboard }) => {
+  return dashboard;
+};
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//       newTab: () => dispatch(newTab()),
+//       setActiveTab: index => dispatch(setActiveTab(index)),
+//       closeTab: id => dispatch(closeTab(id))
+//   };
+// }
+
 class TabPaneComponent extends Component {
 
     constructor(props, context){

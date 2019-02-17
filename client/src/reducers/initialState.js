@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 
-const initialState = {
+export const initialState = {
     login: {
         status: false,
         details: {
@@ -14,10 +14,22 @@ const initialState = {
     dashboard: {
         rabbitmq: {},
         activeTab: 0,
-        tabs: [{
-            id: uuid.v4(),
-        }]
+        tabs: [newTabState()]
     }
 }
 
-export default initialState;
+export function newTabState() {
+    const tap = {
+        active: true,
+    }
+    const subscribe = {
+        active: false
+    }
+    const publish = {
+        active: false
+    }
+    return {
+        id: uuid.v4(),
+        menu: { tap, subscribe, publish }
+    }
+}

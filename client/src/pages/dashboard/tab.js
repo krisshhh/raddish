@@ -12,15 +12,14 @@ const mapStateToProps = ({ dashboard }) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-      newTab: () => dispatch(newTab()),
-      setActiveTab: index => dispatch(setActiveTab(index)),
-      closeTab: id => dispatch(closeTab(id))
+        newTab: () => dispatch(newTab()),
+        setActiveTab: index => dispatch(setActiveTab(index)),
+        closeTab: id => dispatch(closeTab(id))
     };
-  }
+}
 
 class TabComponent extends Component {
     constructor(props, context) {
-        console.log(props);
         super(props, context)
         this.addTab = this.addTab.bind(this);
         this.handleTabChange = this.handleTabChange.bind(this);
