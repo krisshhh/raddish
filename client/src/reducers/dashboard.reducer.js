@@ -51,7 +51,7 @@ function closeTabReducer(state, action) {
 }
 
 function switchMenuReducer(state, { menuId }) {
-    const newTabs = state.tabs;
+    const newTabs = [ ...state.tabs ];
     const activeTab = state.activeTab;
     newTabs[activeTab].activeMenu = menuId;
     return {

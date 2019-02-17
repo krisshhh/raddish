@@ -6,7 +6,7 @@ import { setActiveMenu } from './../../actions/dashboard.actions'
 const mapStateToProps = ({ dashboard }) => {
   const activeTab = dashboard.activeTab;
   const tab = dashboard.tabs[activeTab];
-  return Object.assign({}, tab);
+  return { ...tab };
 };
 
 function mapDispatchToProps(dispatch) {

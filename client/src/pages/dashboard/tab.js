@@ -7,7 +7,7 @@ import { newTab, setActiveTab, closeTab} from './../../actions/dashboard.actions
 import uuid from 'uuid';
 
 const mapStateToProps = ({ dashboard }) => {
-    return dashboard;
+    return { ...dashboard };
 };
 
 function mapDispatchToProps(dispatch) {
