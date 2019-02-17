@@ -8,9 +8,6 @@ export const NEW_TAB = 'NEW_TAB';
 export function newTab() {
     return {
         type: NEW_TAB,
-        tab: {
-            id: uuid.v4()
-        }
     }
 }
 

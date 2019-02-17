@@ -5,7 +5,8 @@ import { setActiveMenu } from './../../actions/dashboard.actions'
 
 const mapStateToProps = ({ dashboard }) => {
   const activeTab = dashboard.activeTab;
-  return dashboard.tabs[activeTab];
+  const tab = dashboard.tabs[activeTab];
+  return Object.assign({}, tab);
 };
 
 function mapDispatchToProps(dispatch) {
@@ -34,19 +35,20 @@ class TabPaneComponent extends Component {
     }
 
     render() {
-        const { activeItem } = this.state
+        const { activeItem, id } = this.state
         return (
           <div>
-          <Menu pointing secondary>
-            <Menu.Item name='tap' active={activeItem === 'tap'} onClick={this.handleItemClick} />
-            <Menu.Item name='subscribe' active={activeItem === 'subscribe'} onClick={this.handleItemClick} />
-            <Menu.Item name='publish' active={activeItem === 'publish'} onClick={this.handleItemClick} />            
-          </Menu>
-  
-          <Segment>
-            <img src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-          </Segment>
-        </div>   
+            <p>{ id }</p>
+            <Menu pointing secondary>
+              <Menu.Item name='tap' active={activeItem === 'tap'} onClick={this.handleItemClick} />
+              <Menu.Item name='subscribe' active={activeItem === 'subscribe'} onClick={this.handleItemClick} />
+              <Menu.Item name='publish' active={activeItem === 'publish'} onClick={this.handleItemClick} />            
+            </Menu>
+    
+            <Segment>
+              <img src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
+            </Segment>
+          </div>   
         )
     }
 }

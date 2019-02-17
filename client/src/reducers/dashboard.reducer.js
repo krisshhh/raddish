@@ -1,4 +1,4 @@
-import { initialState } from './initialState';
+import { initialState, newTabState } from './initialState';
 import { LOGIN_SUCCESS } from './../actions/login.actions';
 import { NEW_TAB, SET_ACTIVE_TAB, CLOSE_TAB, SET_MENU } from './../actions/dashboard.actions';
 import { remove, findIndex } from 'lodash';
@@ -13,7 +13,7 @@ export default function dashboardReducer(state = initialState.dashboard, action)
         case NEW_TAB: 
             return {
                 ...state,
-                tabs: [...state.tabs, action.tab]
+                tabs: [...state.tabs, newTabState()]
             }
         case SET_ACTIVE_TAB: 
             return {
