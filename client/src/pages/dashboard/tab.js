@@ -52,8 +52,7 @@ class TabComponent extends Component {
             ),
             render: () => (
                 <Tab.Pane key={tab.id} className='tab-container'>
-                    <p>{ tab.id }</p>
-                    <TabPaneComponent tabId={ tab.id }></TabPaneComponent>
+                    <TabPaneComponent></TabPaneComponent>
                 </Tab.Pane>
             )
         }
