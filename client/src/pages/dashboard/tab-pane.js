@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import { Input, Menu, Segment } from 'semantic-ui-react'
+import { Input, Menu, Segment, Icon } from 'semantic-ui-react'
 import { setActiveMenu } from './../../actions/dashboard.actions'
+import PublishComponent from './publish'
 
 const mapStateToProps = ({ dashboard }) => {
   const activeTab = dashboard.activeTab;
@@ -35,21 +36,35 @@ class TabPaneComponent extends Component {
     }
 
     render() {
-        const { activeItem, id } = this.state
-        return (
-          <div>
-            <p>{ id }</p>
-            <Menu pointing secondary>
-              <Menu.Item name='tap' active={activeItem === 'tap'} onClick={this.handleItemClick} />
-              <Menu.Item name='subscribe' active={activeItem === 'subscribe'} onClick={this.handleItemClick} />
-              <Menu.Item name='publish' active={activeItem === 'publish'} onClick={this.handleItemClick} />            
+        switch(this.state.activeItem) {
+          case 'publish':
+            return <PublishComponent></PublishComponent>
+            break;
+          default:
+            return this.renderMenu();
+            break; 
+        }
+    }
+
+    renderMenu() {
+      const { activeItem, id } = this.state
+      return (
+        <div>
+            <Menu compact icon='labeled' size='massive'>
+              <Menu.Item name='tap' onClick={this.handleItemClick} >
+                <Icon name='spy' /> Tap
+              </Menu.Item>
+
+              <Menu.Item name='subscribe' onClick={this.handleItemClick} >
+                <Icon name='level down alternate' /> Subscribe
+              </Menu.Item>
+
+              <Menu.Item name='publish' onClick={this.handleItemClick} >
+                <Icon name='pushed' /> Publish
+              </Menu.Item>
             </Menu>
-    
-            <Segment>
-              <img src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-            </Segment>
-          </div>   
-        )
+        </div>   
+      )
     }
 }
 

@@ -21,10 +21,16 @@ export const initialState = {
 export function newTabState() {
     const tap = {}
     const subscribe = {}
-    const publish = {}
+    const publish = {
+        onProcess: false,
+        exchange: '',
+        routeKey: '',
+        headers: [],
+        body: ''
+    }
     return {
         id: uuid.v4(),
-        activeMenu: 'tap',
+        activeMenu: '',
         menu: { tap, subscribe, publish }
     }
 }

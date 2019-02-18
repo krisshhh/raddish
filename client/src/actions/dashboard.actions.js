@@ -34,3 +34,13 @@ export function setActiveMenu(menuId) {
         menuId: menuId
     }
 }
+
+export const UPDATE_FORM_DETAILS = 'UPDATE_FORM_DETAILS';
+export function updateFormDetails(data, tabId, menuId) {
+    return {
+        type: UPDATE_FORM_DETAILS,
+        tabId,
+        data, 
+        menuId
+    }
+}
