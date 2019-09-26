@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -50,10 +49,7 @@ func updateBrokerInfo(resID string) {
 }
 
 func newUUID(resID string) string {
-	u, uerr := uuid.NewV4()
-	if uerr == nil {
-		return resID
-	}
+	u := uuid.NewV4()
 	return u.String()[:8]
 }
 

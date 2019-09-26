@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"crypto/tls"
+	// "crypto/tls"
 	"github.com/streadway/amqp"
 	"github.com/jandelgado/rabtap/pkg"
 )
@@ -43,10 +43,10 @@ func (rabbitmq *Rabbitmq) Connect(det RabbitmqLoginDetails) error {
 
 // RestClient connect to rabbitmq rest client for broker info
 func (rabbitmq *Rabbitmq) RestClient(restClientURL string) error {
-	rabbitmq.restClient = rabtap.NewRabbitHTTPClient(restClientURL, &tls.Config{})
-	if err := rabbitmq.UpdateBrokerInfo(); err != nil {
-		return err
-	}
+	// rabbitmq.restClient = rabtap.NewRabbitHTTPClient(restClientURL, &tls.Config{})
+	// if err := rabbitmq.UpdateBrokerInfo(); err != nil {
+	// 	return err
+	// }
 	return nil
 }
 
