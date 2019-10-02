@@ -4,7 +4,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	logger "log"
 	"net"
 	"net/http"
 	"os"
@@ -28,7 +28,7 @@ func main() {
 	}
 	ui, uiErr = lorca.New("", "", 900, 650, args...)
 	if uiErr != nil {
-		log.Fatal(uiErr)
+		logger.Fatal(uiErr)
 	}
 	defer ui.Close()
 
@@ -40,7 +40,7 @@ func main() {
 	// e.g: ui.Load("data:text/html," + url.PathEscape(html))
 	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 	defer ln.Close()
 	go http.Serve(ln, http.FileServer(FS))
@@ -54,5 +54,5 @@ func main() {
 	case <-ui.Done():
 	}
 
-	log.Println("exiting...")
+	logger.Println("exiting...")
 }
