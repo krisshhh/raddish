@@ -53,3 +53,34 @@ body, #root, .ui.page {
 #radish-header div.content {
     color: wheat;
 }
+
+
+/*
+* App Tap Form styles
+*/
+
+.app-tap-form {
+    display: flex;
+    flex-basis: 50%;
+}
+
+.app-tap-form .controls {
+    width: 100%;
+    padding: 8px 15px;
+}
+
+.app-tap-form .action {
+    display: flex;
+    flex-basis: 100px;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.app-tap-form .action button {
+    margin-top: 5px;
+}
+
+.app-tap-form .ui.form .fields .field {
+    margin-right: 15px;
+}

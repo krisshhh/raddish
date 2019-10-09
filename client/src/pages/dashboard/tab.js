@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Tab, Icon, Menu } from 'semantic-ui-react';
-import { remove, findIndex } from 'lodash';
+import { Tab, Icon, Menu, Header } from 'semantic-ui-react';
 import TabPaneComponent from './tab-pane';
 import { connect } from "react-redux";
 import { newTab, setActiveTab, closeTab} from './../../actions/dashboard.actions'
-import uuid from 'uuid';
+
 
 const mapStateToProps = ({ dashboard }) => {
     return { ...dashboard };
@@ -30,7 +29,7 @@ class TabComponent extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ ... this.getPanes(nextProps) })
+        this.setState({ ...this.getPanes(nextProps) })
     }
 
     getPanes(props) {

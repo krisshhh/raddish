@@ -26,8 +26,10 @@ type Rabbitmq struct {
 // NewRabbitmq expose rabbitmq functionality
 func NewRabbitmq() *Rabbitmq {
 	return &Rabbitmq {
-		connected:		 	false,
-		restClientExist:	false,
+		amqpURL: "",
+		restURL: "",
+		connected: false,
+		restClientExist: false,
 	}
 }
 

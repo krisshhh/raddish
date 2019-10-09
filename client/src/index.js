@@ -5,15 +5,32 @@ import store from "./store/index";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-//MOCK -- comment out
-window.Request = function(resId) {
-    setTimeout(() => {
-        window.response(resId,'LOGIN_RESPONSE', 'SUCCESS',  JSON.stringify({
-            brokerInfo: [],
-            queues: [],
-        }), '{}');
-    }, 1000);
-}
+// MOCK -- comment out
+// window.Request = function(resType, resId) {
+//     switch(resType) {
+//         case 'LOGIN': 
+//             setTimeout(() => {
+//                 window.response('LOGIN_RESPONSE', resId, 'SUCCESS',  JSON.stringify({
+//                     brokerInfo: [{
+//                         destination: "Test",
+//                         destination_type: "queue",
+//                         properties_key: "Test",
+//                         routing_key: "Test",
+//                         source: "",
+//                         vhost: "/"
+//                     }],
+//                     queues: [{
+//                         name: "Test",
+//                         state: "running",
+//                         vhost: "/"
+//                     }],
+//                 }), '{}');
+//             }, 1000);
+//             break;
+//         default:
+//             console.log('invalid request');
+//     }
+// }
 
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 

@@ -9,7 +9,7 @@ var rabbitmq *Rabbitmq
 var subscriptions map[string](*chan bool)
 
 // RequestHandler handles ui requests
-func RequestHandler(reqID string, reqType string, content string) {
+func RequestHandler(reqType string, reqID string, content string) {
 	// UILog(fmt.Sprintf("%s:%s", reqID, reqType))
 	switch reqType {
 	case "START":
@@ -33,19 +33,19 @@ func loginHandler(resID string, str string) {
 	// connect to rabbitmq
 	err := rabbitmq.Connect(details)
 	if err != nil {
-		UIRespond(resID, "LOGIN_RESPONSE", "FAILURE", "{}", fmt.Sprintf("%s", err))
+		UIRespond("LOGIN_RESPONSE", resID, "FAILURE", "{}", fmt.Sprintf("%s", err))
 	}
 	brokerInfoJSON := StringifyRabbitmqDetails(&rabbitmq.brokerInfo)
-	UIRespond(resID, "LOGIN_RESPONSE", "SUCCESS", brokerInfoJSON, "")
+	UIRespond("LOGIN_RESPONSE", resID, "SUCCESS", brokerInfoJSON, "")
 }
 
 func updateBrokerInfo(resID string) {
 	err := rabbitmq.UpdateBrokerInfo()
 	if err != nil {
-		UIRespond(resID, "GET_BROKERINFO_RESPONSE", "FAILURE", "{}", fmt.Sprintf("%s", err))
+		UIRespond("GET_BROKERINFO_RESPONSE", resID, "FAILURE", "{}", fmt.Sprintf("%s", err))
 	}
 	brokerInfoJSON := StringifyRabbitmqDetails(&rabbitmq.brokerInfo)
-	UIRespond(resID, "GET_BROKERINFO_RESPONSE", "SUCCESS", brokerInfoJSON, "")
+	UIRespond("GET_BROKERINFO_RESPONSE", resID,  "SUCCESS", brokerInfoJSON, "")
 }
 
 func newUUID(resID string) string {
@@ -58,11 +58,11 @@ func subscribe(resID string, queueName string) {
 	kill := make(chan bool)
 	msgs, err := rabbitmq.SubscribeToQueue(queueName)
 	if err != nil {
-		UIRespond(resID, "SUBSCRIBE_RESPONSE", "FAILURE", "{}", fmt.Sprintf("%s", err))
+		UIRespond("SUBSCRIBE_RESPONSE", resID,  "FAILURE", "{}", fmt.Sprintf("%s", err))
 		return
 	}
 	subscriptions[jobID] = &kill
-	UIRespond(resID, "SUBSCRIBE_RESPONSE", "SUCCESS", jobID, "{}")
+	UIRespond("SUBSCRIBE_RESPONSE", resID,  "SUCCESS", jobID, "{}")
 	for d := range msgs {
 		fmt.Println(d.Body)
 	}

@@ -1,9 +1,3 @@
-import api from './../services/api';
-import { ofType } from 'redux-observable';
-import { of } from 'rxjs';
-import uuid from 'uuid';
-import { catchError, tap, mergeMap, map } from 'rxjs/operators';
-
 export const NEW_TAB = 'NEW_TAB';
 export function newTab() {
     return {
@@ -19,6 +13,15 @@ export function setActiveTab(index) {
     }
 }
 
+export const SET_TAP_DETAILS = 'SET_TAP_DETAILS';
+export function setTapDetails({ exchange, bindingKey }) {
+    return {
+        type: SET_TAP_DETAILS,
+        exchange, 
+        bindingKey 
+    }
+}
+
 export const CLOSE_TAB = 'CLOSE_TAB';
 export function closeTab(id) {
     return {
@@ -27,13 +30,13 @@ export function closeTab(id) {
     }
 }
 
-export const SET_MENU = 'SET_MENU'
-export function setActiveMenu(menuId) {
-    return {
-        type: SET_MENU,
-        menuId: menuId
-    }
-}
+// export const SET_MENU = 'SET_MENU'
+// export function setActiveMenu(menuId) {
+//     return {
+//         type: SET_MENU,
+//         menuId: menuId
+//     }
+// }
 
 export const UPDATE_FORM_DETAILS = 'UPDATE_FORM_DETAILS';
 export function updateFormDetails(data, tabId, menuId) {

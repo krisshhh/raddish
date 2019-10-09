@@ -1,5 +1,5 @@
-import { of, throwError, Subject } from 'rxjs';
-import { catchError, mergeMap, map, take, filter, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import {  map, take, filter } from 'rxjs/operators';
 import uuid from 'uuid';
 
 class Api {
@@ -10,13 +10,13 @@ class Api {
         // this.request('START', {});
     }
 
-    request(type, content) {
+    request(type= '', content= {}) {
         const reqId = uuid.v4();
-        window.Request(reqId, type, JSON.stringify(content));
+        window.Request(type, reqId, JSON.stringify(content));
         return reqId;
     }
 
-    response(resId, type, status, response, err) {
+    response(type, resId, status, response, err) {
         const res = {
             resId, type, status, err,
             response: JSON.parse(response),

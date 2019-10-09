@@ -34,8 +34,8 @@ func StringifyRabbitmqDetails(info *rabtap.BrokerInfo) string {
 }
 
 // UIRespond : send data to frontend
-func UIRespond(resID string, resType string, status string, response string, err string) {
-	str := fmt.Sprintf("response('%s', '%s', '%s', '%s', '%s')", resID, resType, status, response, err);
+func UIRespond(resType string, resID string, status string, response string, err string) {
+	str := fmt.Sprintf("response('%s', '%s', '%s', '%s', '%s')",resType, resID, status, response, err);
 	ui.Eval(str);
 	// fmt.Println(str);
 }

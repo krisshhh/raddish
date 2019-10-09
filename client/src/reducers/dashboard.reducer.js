@@ -1,6 +1,6 @@
 import { initialState, newTabState } from './initialState';
 import { LOGIN_SUCCESS } from './../actions/login.actions';
-import { NEW_TAB, SET_ACTIVE_TAB, CLOSE_TAB, SET_MENU, UPDATE_FORM_DETAILS } from './../actions/dashboard.actions';
+import { NEW_TAB, SET_ACTIVE_TAB, SET_TAP_DETAILS, CLOSE_TAB, UPDATE_FORM_DETAILS, setTapDetails } from './../actions/dashboard.actions';
 import { remove, findIndex } from 'lodash';
 
 export default function dashboardReducer(state = initialState.dashboard, action) {
@@ -20,10 +20,10 @@ export default function dashboardReducer(state = initialState.dashboard, action)
                 ...state,
                 activeTab: action.tabIndex
             }
+        case SET_TAP_DETAILS: 
+            return updateTapDetails(state, action);
         case CLOSE_TAB: 
             return closeTabReducer(state, action);
-        case SET_MENU:
-            return switchMenuReducer(state, action);
         case UPDATE_FORM_DETAILS:
             return updateFormDetails(state, action);
         default:
@@ -37,14 +37,9 @@ export default function dashboardReducer(state = initialState.dashboard, action)
  * @param {*} action 
  */
 function closeTabReducer(state, action) {
-    const tabs = state.tabs;
     const activeIndex = state.activeTab;
-    const activeTabId = state.tabs[activeIndex].id;
-    const deleteTabIndex = findIndex(state.tabs, { 'id': action.tabId })
     const newTabs = remove([ ...state.tabs ], n => n.id !== action.tabId)
     const nearestTabId = (activeIndex === newTabs.length)? activeIndex - 1 : activeIndex; 
-    const newActiveIndex = (activeIndex ===  deleteTabIndex)?
-        nearestTabId : findIndex(newTabs, { 'id': activeTabId });
     return {
         ...state,
         tabs: newTabs,
@@ -52,14 +47,11 @@ function closeTabReducer(state, action) {
     }
 }
 
-function switchMenuReducer(state, { menuId }) {
-    const newTabs = [ ...state.tabs ];
-    const activeTab = state.activeTab;
-    newTabs[activeTab].activeMenu = menuId;
-    return {
-        ...state,
-        tabs: newTabs
-    }; 
+function updateTapDetails(state, { exchange, bindingKey }) {
+    const { activeTab } = state;
+    state.tabs[activeTab].exchange = exchange;
+    state.tabs[activeTab].bindingKey = bindingKey;
+    return { ...state };
 }
 
 function updateFormDetails(state, { data, tabId, menuId }) {

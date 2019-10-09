@@ -31,9 +31,9 @@ class DashboardComponent extends Component {
     // }
     return (
         <Segment className="page dashboard">
-            <div className="dashboard-header">
+            {/* <div className="dashboard-header">
                 <HeaderComponent></HeaderComponent>
-            </div>
+            </div> */}
             <div className="dashboard-container">
                 <TabComponent></TabComponent>
             </div>
