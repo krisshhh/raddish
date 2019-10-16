@@ -41,11 +41,5 @@ class Api {
     }
 }
 
-// return throwError(new Error ({
-//     exchanges: [],
-//     queues: [],
-//     binds: []
-// }));
-
 const api = new Api();
 export default api;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Tab, Icon, Menu, Header } from 'semantic-ui-react';
-import TabPaneComponent from './tab-pane';
+import { Tab, Icon, Menu } from 'semantic-ui-react';
+import TapComponent from './tap/tap.component';
 import { connect } from "react-redux";
 import { newTab, setActiveTab, closeTab} from './../../actions/dashboard.actions'
 
@@ -51,7 +51,7 @@ class TabComponent extends Component {
             ),
             render: () => (
                 <Tab.Pane key={tab.id} className='tab-container'>
-                    <TabPaneComponent></TabPaneComponent>
+                    <TapComponent></TapComponent>
                 </Tab.Pane>
             )
         }

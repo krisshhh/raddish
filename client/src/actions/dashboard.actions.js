@@ -13,10 +13,11 @@ export function setActiveTab(index) {
     }
 }
 
-export const SET_TAP_DETAILS = 'SET_TAP_DETAILS';
-export function setTapDetails({ exchange, bindingKey }) {
+export const START_TAP = 'START_TAP';
+export function startTap({ exchange, bindingKey, tabId }) {
     return {
-        type: SET_TAP_DETAILS,
+        type: START_TAP,
+        tabId,
         exchange, 
         bindingKey 
     }
@@ -30,20 +31,12 @@ export function closeTab(id) {
     }
 }
 
-// export const SET_MENU = 'SET_MENU'
-// export function setActiveMenu(menuId) {
-//     return {
-//         type: SET_MENU,
-//         menuId: menuId
-//     }
-// }
-
 export const UPDATE_FORM_DETAILS = 'UPDATE_FORM_DETAILS';
-export function updateFormDetails(data, tabId, menuId) {
+export function updateFormDetails({ tabId, exchange, bindingKey }) {
     return {
         type: UPDATE_FORM_DETAILS,
         tabId,
-        data, 
-        menuId
+        exchange, 
+        bindingKey
     }
 }

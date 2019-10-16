@@ -23,6 +23,7 @@ export function newTabState() {
         id: uuid.v4(),
         exchange: '',
         bindingKey: '',
+        isTapping: false,
         processing: false
     }
 }

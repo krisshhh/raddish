@@ -4,33 +4,12 @@ import { Provider } from "react-redux";
 import store from "./store/index";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Mock from './services/mock';
 
-// MOCK -- comment out
-// window.Request = function(resType, resId) {
-//     switch(resType) {
-//         case 'LOGIN': 
-//             setTimeout(() => {
-//                 window.response('LOGIN_RESPONSE', resId, 'SUCCESS',  JSON.stringify({
-//                     brokerInfo: [{
-//                         destination: "Test",
-//                         destination_type: "queue",
-//                         properties_key: "Test",
-//                         routing_key: "Test",
-//                         source: "",
-//                         vhost: "/"
-//                     }],
-//                     queues: [{
-//                         name: "Test",
-//                         state: "running",
-//                         vhost: "/"
-//                     }],
-//                 }), '{}');
-//             }, 1000);
-//             break;
-//         default:
-//             console.log('invalid request');
-//     }
-// }
+// Mock window requests
+if (process.env.NODE_ENV === 'development') {
+    Mock();
+}
 
 ReactDOM.render(<Provider store={ store }><App /></Provider>, document.getElementById('root'));
 
