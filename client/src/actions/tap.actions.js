@@ -16,12 +16,11 @@ export function startTap({ exchange, bindingKey, tabId }) {
 export const startTapEpic = action$ => action$.pipe(
     ofType(START_TAP),
     mergeMap(action => {
-        return api.startTap(action.tabId).pipe(
-            tap(e => console.log(e)),
+        return api.tap(action.tabId).pipe(
             map(res => {
-                if (res.type === 'start') { return tapStartEvent(res) }
-                if (res.type === 'event') { return tapEvent(res) }
-                if (res.type === 'stop') { return tapStopEvent(res) }
+                if (res.status === 'START') { return tapStartEvent(res) }
+                if (res.status === 'EVENT') { return tapEvent(res) }
+                if (res.status === 'STOP') { return tapStopEvent({ tabId: action.tabId }) }
             })
         );
     })
@@ -38,12 +37,8 @@ export function stopTap({ tabId, error }) {
 }
 // epic
 export const stopTapEpic = action$ => action$.pipe(
-    ofType(START_TAP),
-    mergeMap(action => {
-        return api.stopTap(action.tabId).pipe(
-            tap(e => console.log(e))
-        );
-    })
+    ofType(STOP_TAP),
+    mergeMap(action => api.stopTap(action.tabId))
 );
 
 
@@ -57,11 +52,11 @@ export function tapStartEvent({ tabId, event }) {
 }
 
 export const TAP_STOP_EVENT = 'TAP_STOP_EVENT';
-export function tapStopEvent({ tabId, event }) {
+export function tapStopEvent({ tabId }) {
     return {
         type: TAP_STOP_EVENT,
         tabId,
-        error: event
+        error: {}
     }
 }
 

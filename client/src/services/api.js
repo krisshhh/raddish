@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import {  map, take, filter } from 'rxjs/operators';
+import {  map, take, filter, takeWhile, endWith } from 'rxjs/operators';
 import uuid from 'uuid';
 
 class Api {
@@ -43,17 +43,22 @@ class Api {
         );
     }
 
-    startTap(details) {
+    tap(details) {
         const reqId = this.request('TAP', details);
         return this.broker.asObservable().pipe(
             filter(e => e.resId === reqId),
             filter(e => e.type === 'TAP'),
-            map(e => {
-                console.log(e);
-                return e.response;
-            }),
+            takeWhile(res => res.status !== 'STOP'),
+            endWith({ status: 'STOP' }),
         );
     }
+
+
+    stopTap(details) {
+        this.request('STOP_TAP', details);
+    }
+
+
 }
 
 const api = new Api();

@@ -38,19 +38,19 @@ class TabComponent extends Component {
                 ...props.tabs.map(tab => this.renderTab(tab)), 
                 this.renderAddButton()
             ],
-            activeIndex: props.activeTab
+            activeIndex: props.tabs.findIndex(tab => tab.isActive === true)
         }
     }
 
     renderTab(tab) {
         return {
             menuItem: (
-                <Menu.Item key={tab.id}>
+                <Menu.Item key={ tab.id }>
                   NewTab <Icon name='close' onClick={ ($e) => { this.closeTab(tab.id); $e.stopPropagation();  } } />
                 </Menu.Item>
             ),
-            render: () => (
-                <Tab.Pane key={tab.id} className='tab-container'>
+            pane: (
+                <Tab.Pane key={ tab.id } className='tab-container'>
                     <TapComponent></TapComponent>
                 </Tab.Pane>
             )
@@ -84,7 +84,7 @@ class TabComponent extends Component {
         const { activeIndex, panes } = this.state
         return (
             <Tab
-            renderActiveOnly={true}
+            renderActiveOnly={false}
             className="tab-component"
             activeIndex={activeIndex}
             onTabChange={this.handleTabChange}

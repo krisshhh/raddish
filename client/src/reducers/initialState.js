@@ -13,14 +13,14 @@ export const initialState = {
     },
     dashboard: {
         rabbitmq: {},
-        activeTab: 0,
-        tabs: [newTabState()]
+        tabs: [newTabState({ isActive: true })]
     }
 }
 
-export function newTabState() {
+export function newTabState({ isActive  }) {
     return {
         id: uuid.v4(),
+        isActive,
         exchange: '',
         bindingKey: '',
         isTapping: false,

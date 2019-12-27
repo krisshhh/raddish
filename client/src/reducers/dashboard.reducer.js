@@ -1,3 +1,4 @@
+import produce from "immer";
 import { remove, findIndex } from 'lodash';
 import { initialState, newTabState } from './initialState';
 import { LOGIN_SUCCESS } from './../actions/login.actions';
@@ -10,23 +11,35 @@ import {
 
 export default function dashboardReducer(state = initialState.dashboard, action) {
     switch(action.type) {
+
         case LOGIN_SUCCESS:
-            return { 
-                ...state,
-                rabbitmq: action.rabbitmq 
-            };
+            return produce(state, draftState => {
+                draftState.rabbitmq = action.rabbitmq;
+            })
+
         case NEW_TAB: 
-            return {
-                ...state,
-                tabs: [...state.tabs, newTabState()]
-            }
+            return produce(state, draftState => {
+                draftState.tabs.forEach(tab => { tab.isActive = false });
+                draftState.tabs.push(newTabState({ isActive: true }));
+            })
+
         case SET_ACTIVE_TAB: 
-            return {
-                ...state,
-                activeTab: action.tabIndex
-            }
+            return produce(state, draftState => {
+                draftState.tabs.forEach((tab, index) => { 
+                    tab.isActive = (index === action.tabIndex) 
+                });
+            })
+
         case CLOSE_TAB: 
-            return closeTabReducer(state, action);
+            return produce(state, draftState => {
+                const activeIndex = draftState.tabs.findIndex(tab => tab.id ===  action.tabId);
+                draftState.tabs = remove([ ...draftState.tabs ], n => n.id !== action.tabId);
+                const nearestTabIndex = (activeIndex === draftState.tabs.length)? activeIndex - 1 : activeIndex; 
+                draftState.tabs.forEach((tab, index) => { 
+                    tab.isActive = (index === nearestTabIndex) 
+                });
+            })
+    
         case UPDATE_FORM_DETAILS:
             return updateFormDetails(state, action);
         default:
@@ -34,21 +47,6 @@ export default function dashboardReducer(state = initialState.dashboard, action)
     }
 }
 
-/**
- * remove tab from tabs and change activeTab to closest tab
- * @param {*} state 
- * @param {*} action 
- */
-function closeTabReducer(state, action) {
-    const activeIndex = state.activeTab;
-    const newTabs = remove([ ...state.tabs ], n => n.id !== action.tabId)
-    const nearestTabId = (activeIndex === newTabs.length)? activeIndex - 1 : activeIndex; 
-    return {
-        ...state,
-        tabs: newTabs,
-        activeTab: nearestTabId
-    }
-}
 
 function updateFormDetails(state, { tabId, exchange, bindingKey }) {
     const newTabs = [ ...state.tabs ];

@@ -5,8 +5,8 @@
   "dependencies": {
     "chance": "^1.1.4",
     "copyfiles": "^2.1.0",
+    "immer": "^5.1.0",
     "lodash": "^4.17.11",
-    "node-sass": "^4.13.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
@@ -37,6 +37,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "node-sass": "^4.13.0",
     "redux-devtools-extension": "^2.13.8"
   }
 }

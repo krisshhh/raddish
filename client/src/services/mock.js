@@ -1,3 +1,5 @@
+const taps = {}
+
 function Mock() {
     window.Request = function(resType, resId, content) {
         switch(resType) {
@@ -22,10 +24,22 @@ function Mock() {
                 break;
             }
             case 'TAP': {
-                console.log(resType, resId, content);
-                window.response('TAP', resId, 'START', JSON.stringify(
-                    {}
-                ))
+                setTimeout(() => {
+                    console.log(resType, resId, content);
+                    window.response('TAP', resId, 'START', JSON.stringify({}), '{}')
+                }, 0)
+                setTimeout(() => {
+                    window.response('TAP', resId, 'EVENT', JSON.stringify({}), '{}')
+                }, 5000)
+                setTimeout(() => {
+                    window.response('TAP', resId, 'STOP', JSON.stringify({}), '{}')
+                }, 10000)
+                break;
+            }
+            case 'STOP_TAP': {
+                setTimeout(() => {
+                    window.response('TAP', resId, 'STOP', JSON.stringify({}), '{}')
+                }, 0)
                 break;
             }
             default:
