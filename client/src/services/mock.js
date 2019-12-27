@@ -1,7 +1,7 @@
 function Mock() {
-    window.Request = function(resType, resId) {
+    window.Request = function(resType, resId, content) {
         switch(resType) {
-            case 'LOGIN': 
+            case 'LOGIN': {
                 setTimeout(() => {
                     window.response('LOGIN_RESPONSE', resId, 'SUCCESS',  JSON.stringify({
                         brokerInfo: [{
@@ -20,6 +20,14 @@ function Mock() {
                     }), '{}');
                 }, 1000);
                 break;
+            }
+            case 'TAP': {
+                console.log(resType, resId, content);
+                window.response('TAP', resId, 'START', JSON.stringify(
+                    {}
+                ))
+                break;
+            }
             default:
                 console.log('invalid request');
         }

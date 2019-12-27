@@ -24,6 +24,10 @@ export function newTabState() {
         exchange: '',
         bindingKey: '',
         isTapping: false,
-        processing: false
+        processing: false,
+        events: [],
+        selectedEvent: null,
+        tapError: null
     }
 }
+

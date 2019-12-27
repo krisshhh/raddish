@@ -13,16 +13,6 @@ export function setActiveTab(index) {
     }
 }
 
-export const START_TAP = 'START_TAP';
-export function startTap({ exchange, bindingKey, tabId }) {
-    return {
-        type: START_TAP,
-        tabId,
-        exchange, 
-        bindingKey 
-    }
-}
-
 export const CLOSE_TAB = 'CLOSE_TAB';
 export function closeTab(id) {
     return {

@@ -18,7 +18,10 @@ class Api {
 
     response(type, resId, status, response, err) {
         const res = {
-            resId, type, status, err,
+            resId, 
+            type, 
+            status, 
+            err,
             response: JSON.parse(response),
         };
         this.broker.next(res);
@@ -37,6 +40,18 @@ class Api {
                 }
             }),
             take(1),
+        );
+    }
+
+    startTap(details) {
+        const reqId = this.request('TAP', details);
+        return this.broker.asObservable().pipe(
+            filter(e => e.resId === reqId),
+            filter(e => e.type === 'TAP'),
+            map(e => {
+                console.log(e);
+                return e.response;
+            }),
         );
     }
 }

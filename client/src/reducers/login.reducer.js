@@ -1,5 +1,4 @@
 import { initialState } from './initialState';
-import dashboardReducer from './dashboard.reducer';
 import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST } from './../actions/login.actions';
 
 export default function loginReducer(state = initialState.login, action) {

@@ -6,7 +6,7 @@ import { updateFormDetails } from './../../../actions/dashboard.actions';
 const mapStateToProps = ({ dashboard }) => {
     const activeTab = dashboard.activeTab;
     const tab = dashboard.tabs[activeTab];
-    return { 
+    return {
         ...tab
     };
 };
@@ -51,31 +51,29 @@ class TapForm extends Component {
 
     render() {
         return (
-            <Card fluid>
-                <div className="app-tap-form">
-                    <div className="controls">
-                        <Form size={ 'tiny' }>
-                            <Form.Group widths='equal' >
-                                <Form.Input
-                                    fluid
-                                    id='exchange'
-                                    label='Exchange'
-                                    value={ this.state.exchange } 
-                                    onChange={ this.handleChange }
-                                    />
-                                <Form.Input
-                                    fluid
-                                    id='bindingKey'
-                                    label='Binding Key'
-                                    value={ this.state.bindingKey } 
-                                    onChange={ this.handleChange }
-                                    />
-                            </Form.Group>
-                        </Form>
-                    </div>
-                    <div className="action">
-                        <Button primary onClick={ this.onTapClick }>Tap</Button>
-                    </div>
+            <Card fluid className="app-tap-form">
+                <div className="controls">
+                    <Form size={'tiny'}>
+                        <Form.Group widths='equal' >
+                            <Form.Input
+                                fluid
+                                id='exchange'
+                                label='Exchange'
+                                value={this.state.exchange}
+                                onChange={this.handleChange}
+                            />
+                            <Form.Input
+                                fluid
+                                id='bindingKey'
+                                label='Binding Key'
+                                value={this.state.bindingKey}
+                                onChange={this.handleChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </div>
+                <div className="action">
+                    <Button primary onClick={this.onTapClick}>Tap</Button>
                 </div>
             </Card>
         )

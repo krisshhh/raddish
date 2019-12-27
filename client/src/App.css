@@ -19,10 +19,33 @@ body, #root, .ui.page {
 }
 .ui.page.dashboard .item {
     padding: 0.508571em 1.14285714em;
+    color: lightsteelblue;
 }
 
+.ui.page.dashboard .item:hover {
+    color: ghostwhite;
+}
+
+.ui.page.dashboard .item.active:hover {
+    color: black;
+}
+
+.ui.page.dashboard .item>i.icon {
+    margin: 4px .35714286em 0px 5px;
+    font-size: 0.9em;
+}
+
+.plus.icon:hover {
+    color: navajowhite;
+}
+
+.ui.page.dashboard .item>i.icon:hover {
+    color: orange;
+}
+
+
 .dashboard-container {
-    height: calc(100% - 82px);
+    height: 100%;
     margin: 10px;
 }
 
